@@ -24,6 +24,22 @@ const createPost = async (req, res) => {
     }
 };
 
+const getAllPosts = async (req, res) => {
+    try {
+        const posts = await Post.find()
+        .populate('user', 'username profilePicture')
+        .populate('comments.user', 'username')
+        .populate('likes', 'username profilePicture')
+        .sort({ createdAt: -1 });
+
+        res.status(200).json(posts);
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({message: 'Server error while fetching posts'});
+    }
+};
+
 module.exports = {
     createPost,
+    getAllPosts,
 }
