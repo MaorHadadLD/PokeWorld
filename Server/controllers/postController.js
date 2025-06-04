@@ -39,7 +39,34 @@ const getAllPosts = async (req, res) => {
     }
 };
 
+const likePost = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.user._id;
+
+        const post = await Post.findById(postId);
+
+        if (!post) {
+            return res.status(404).json({message: 'Post not found'});
+        }
+
+        const likedIndex = post.likes.indexOf(userId);
+
+        if (likedIndex === -1) {
+            post.likes.splice(likedIndex, 1);
+        }
+
+        await post.save();
+
+        res.status(200).json(post);
+    } catch (error) {
+        console.error('Error liking post:', error);
+        res.status(500).json({message: 'Server error while liking post'});
+    }
+};
+
 module.exports = {
     createPost,
     getAllPosts,
+    likePost,
 }
