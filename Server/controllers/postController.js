@@ -65,8 +65,40 @@ const likePost = async (req, res) => {
     }
 };
 
+const addComment = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const userId = req.user._id;
+        const {text} = req.body;
+
+        if (!text) {
+            return res.status(400).json({message: 'Comment text is required'});
+        }
+
+        const post = await Post.findById(postId);
+
+        if (!post) {
+
+            return res.status(404).json({message: 'Post not found'});
+        }
+
+        post.comments.push({user: userId, text, date: new Date()});
+        await post.save();
+
+        const updatedPost = await Post.findById(postId)
+            .populate('user', 'username profilePicture')
+            .populate('comments.user', 'username');
+
+        res.status(201).json(updatedPost);
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        res.status(500).json({message: 'Server error while adding comment'});
+    }
+};
+
 module.exports = {
     createPost,
     getAllPosts,
     likePost,
+    addComment,
 }
