@@ -25,6 +25,7 @@ const registerUser = async (req, res) => {
             email: newUser.email,
             token: generateToken(newUser._id),
         });
+        console.log('User registered successfully:', newUser._id);
     } catch (error) {
         console.error('Error registering user:', error);
         res.status(500).json({message: 'Server error'});
