@@ -1,4 +1,5 @@
 const Post = require('../models/Post');
+const Comment = require('../models/Comment');
 
 const getSingleComment = async (req, res) => {
     const { postId, commentId } = req.params;
@@ -64,8 +65,30 @@ const deleteComment = async (req, res) => {
     }
 };
 
+const addComment = async (req, res) => {
+    try {
+        const {postId} = req.params;
+        const {text, parentComment} = req.body;
+        const userId = req.user._id;
+
+        const newComment = new Comment({
+            user: userId,
+            post: postId,
+            text,
+            perentComment: parentComment || null,
+            date: new Date()
+        });
+
+        const savedComment = await newComment.save();
+        res.status(201).json(savedComment);
+    } catch (err) {
+        res.status(500).json({message: 'Server error', error: err.message});
+    }
+}
+
 module.exports = {
     getSingleComment,
     updateComment,
-    deleteComment
+    deleteComment,
+    addComment
 }
