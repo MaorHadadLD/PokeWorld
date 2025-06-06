@@ -41,7 +41,31 @@ const updateComment = async (req, res) => {
     }
 };
 
+const deleteComment = async (req, res) => {
+    const { postId, commentId} = req.params;
+
+    try {
+        const post = await Post.findById(postId);
+
+        const comment = post.comments.id(commentId);
+        if (!comment) {
+            return res.status(404).json({message: 'Comment not found'});
+        }
+
+        if (comment.user.toString() !== req.user._id.toString()) {
+            return res.status(403).json({message: 'You are not authorized to delete this comment'});
+        }
+
+        comment.remove();
+        await post.save();
+        res.status(200).json({message: 'Comment deleted successfully'});
+    } catch (err) {
+        res.status(500).json({message: 'Server error', error: err.message});
+    }
+};
+
 module.exports = {
     getSingleComment,
     updateComment,
+    deleteComment
 }
