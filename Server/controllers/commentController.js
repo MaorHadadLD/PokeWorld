@@ -113,10 +113,37 @@ const getPostComments = async (req, res) => {
     }
 };
 
+const likeComment = async (req, res) => {
+    try {
+        const {commentId} = req.params;
+        const userId = req.user._id;
+
+        const comment = await Comment.findById(commentId);
+        if (!comment) {
+            return res.status(404).json({message: 'Comment not found'});
+        }
+
+        const index = comment.likes.indexOf(userId);
+        if (index === -1) {
+            // User has not liked the comment, add like
+            comment.likes.push(userId);
+        } else {
+            // User has already liked the comment, remove like
+            comment.likes.splice(index, 1);
+        }
+
+        await comment.save();
+        res.status(200).json({message: 'Comment liked/unliked successfully', likes: comment.likes.length});
+    } catch (err) {
+        res.status(500).json({message: 'Server error', error: err.message});
+    }
+}
+
 module.exports = {
     getSingleComment,
     updateComment,
     deleteComment,
     addComment,
-    getPostComments
+    getPostComments,
+    likeComment
 }
