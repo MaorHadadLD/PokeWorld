@@ -139,11 +139,30 @@ const likeComment = async (req, res) => {
     }
 }
 
+const getCommentStats = async (req, res) => {
+    try {
+        const { postId } = req.params;
+
+        const totalComments = await Comment.countDocuments({ post: postId });
+        const replies = await Comment.countDocuments({ post: postId, parentComment: { $ne: null } });
+        const topLevel = totalComments - replies;
+
+        res.status(200).json({
+            totalComments,
+            topLevelComments: topLevel,
+            nestedReplies: replies
+        });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+}
+
 module.exports = {
     getSingleComment,
     updateComment,
     deleteComment,
     addComment,
     getPostComments,
-    likeComment
+    likeComment,
+    getCommentStats
 }
