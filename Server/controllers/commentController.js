@@ -86,9 +86,37 @@ const addComment = async (req, res) => {
     }
 }
 
+const getPostComments = async (req, res) => {
+    try {
+        const { postId } = req.params;
+
+        // Get top-level comments
+        const comments = await Comment.find({ post: postId, parentComment: null })
+            .populate('user', 'username profilePicture')
+            .sort({ date: -1 });
+
+        // Attach replies to each top-level comment
+        const commentsWithReplies = await Promise.all(comments.map(async comment => {
+            const replies = await Comment.find({ parentComment: comment._id })
+                .populate('user', 'username profilePicture')
+                .sort({ date: 1 });
+
+            return {
+                ...comment.toObject(),
+                replies
+            };
+        }));
+
+        res.status(200).json(commentsWithReplies);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    }
+};
+
 module.exports = {
     getSingleComment,
     updateComment,
     deleteComment,
-    addComment
+    addComment,
+    getPostComments
 }
