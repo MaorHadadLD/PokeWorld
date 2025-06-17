@@ -94,7 +94,12 @@ const addComment = async (req, res) => {
         });
 
         const savedComment = await newComment.save();
-        await savedComment.populate('user', 'username profilePicture');
+       const populatedComment = await Comment.findById(savedComment._id)
+            .populate('user', 'username profilePicture')
+
+
+        const io = req.app.get('io');
+        io.emit('newComment', populatedComment);
 
         res.locals.socketEvent = {
             event: 'newComment',
