@@ -39,12 +39,18 @@ const updateComment = async (req, res) => {
             return res.status(404).json({ message: 'Comment not found' });
         }
 
-        if (comment.user.toString() !== userId.tostring()) {
+        if (comment.user.toString() !== userId.toString()) {
             return res.status(403).json({ message: 'Unauthorized' });
         }
 
         comment.text = text;
         await comment.save();
+
+        const io = req.app.get('io');
+        io.emit('commentUpdated', {
+            _id: comment._id,
+            text: comment.text,
+        });
 
         res.status(200).json({ message: 'Comment updated successfully', comment });
     } catch (err) {
@@ -66,8 +72,11 @@ const deleteComment = async (req, res) => {
             return res.status(403).json({ message: 'You are not authorized to delete this comment' });
         }
 
-        await Comment.deleteMany({ parentComment: comment._id});
+        await comment.deleteMany({ parentComment: comment._id});
         await comment.deleteOne();
+
+        const io = req.app.get('io');
+        io.emit('commentDeleted', { commentId });
 
         res.status(200).json({ message: 'Comment deleted successfully' });
     } catch (err) {
@@ -89,7 +98,7 @@ const addComment = async (req, res) => {
             user: userId,
             post: postId,
             text,
-            perentComment: parentComment || null,
+            parentComment: parentComment || null,
             date: new Date()
         });
 
@@ -100,11 +109,6 @@ const addComment = async (req, res) => {
 
         const io = req.app.get('io');
         io.emit('newComment', populatedComment);
-
-        res.locals.socketEvent = {
-            event: 'newComment',
-            data: savedComment
-        };
 
         res.status(201).json(savedComment);
     } catch (err) {
@@ -129,7 +133,8 @@ const getPostComments = async (req, res) => {
 
             return {
                 ...comment.toObject(),
-                replies
+                replies,
+                likesCount: comment.likes.length
             };
         }));
 
@@ -159,6 +164,12 @@ const likeComment = async (req, res) => {
         }
 
         await comment.save();
+
+        const io = req.app.get('io');
+        io.emit('commentLiked', {
+            commentId: comment._id,
+            likesCount: comment.likes.length,
+        });
         res.status(200).json({ message: index === -1 ? 'Liked' : 'Unliked', likes: comment.likes.length });
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err.message });
