@@ -1,5 +1,5 @@
-import React from 'react';
-import {loginUser} from '../../api/user';
+import React, {useState} from 'react';
+import {loginUser} from '../api/user';
 
 const LoginPage = () => {
    const [email, setEmail] = useState('');
@@ -16,14 +16,13 @@ const LoginPage = () => {
         const userData = await loginUser({email, password});
         console.log('User logged in:', userData);
     } catch (err) {
-        setError(err.response?.sata?.message || 'Login failed');
+        setError(err.response?.data?.message || 'Login failed');
     } finally {
         setLoading(false);
     }
    }
-};
 
-return (
+   return (
     <div className='login-page' style={{maxWidth: 400, margin: 'auto'}}>
         <h2>LogIn</h2>
         <form onSubmit={handleLogin}>
@@ -48,5 +47,8 @@ return (
         </form>
     </div>
 )
+};
+
+
 
 export default LoginPage;
