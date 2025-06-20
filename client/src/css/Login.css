@@ -12,8 +12,8 @@ body {
 }
 
 .container {
-  height: 200vh;
-  background-image: url('https://images.unsplash.com/photo-1538137524007-21e48fa42f3f?auto=format&fit=crop&w=1834&q=80');
+  height: 100vh;
+  background-image: url('https://sm.ign.com/ign_il/feature/t/the-10-bes/the-10-best-first-generation-pokemon_1xjb.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -245,4 +245,51 @@ body {
   .modal-right {
     display: none;
   }
+}
+
+.pikachu-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: float 3s ease-in-out infinite;
+  transform: scale(1.2);
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) scale(1.2);
+  }
+  50% {
+    transform: translateY(-15px) scale(1.2);
+  }
+  100% {
+    transform: translateY(0) scale(1.2);
+  }
+}
+
+.pokeball-button {
+  position: relative;
+  padding-left: 40px;
+  background-color: #ff1c1c;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.pokeball-button::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/5/53/Poké_Ball_icon.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 24px;
+  height: 24px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translateY(-50%) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg); }
 }

@@ -24,53 +24,53 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="container">
-            <div className="modal is-open">
-                <div className="modal-container">
-                    <div className="modal-left">
-                        <h2 className="modal-title">LogIn</h2>
-                        <p className="modal-desc">Wealcome back! Please enter your details.</p>
-
-                        <form onSubmit={handleLogin}>
-                            <div className="input-block">
-                                <label className="input-label" htmlfor="email">Email</label>
-                                <input
-                                    type="email"
-                                    placeholder="Email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className="input-block">
-                                <label className="input-label" htmlfor="password">Password</label>
-                                <input
-                                    type="password"
-                                    palceholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <button className="input-button" type="submit" disabled={loading}>
-                                {loading ? 'Logging in...' : 'Log In'}
-                            </button>
-                            {error && <p style={{ color: 'red' }}>{error}</p>}
-                        </form>
-                        <p className="sign-up">
-                            Don't have an account? <a href="/signup">Sign Up</a>
-                        </p>
-                    </div>
-                    <div className="modal-right">
-                        <img
-                            src="https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&w=800&q=80"
-                            alt="login background"
-                        />
-                    </div>
-                </div>
-            </div>
+    <div className="container">
+      <div className="modal is-open">
+        <div className="modal-container">
+          <div className="modal-left">
+            <h2 className="modal-title">LogIn</h2>
+            <p className="modal-desc">Welcome back! Please enter your details.</p>
+            <form onSubmit={handleLogin}>
+              <div className="input-block">
+                <label className="input-label">Email</label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="input-block">
+                <label className="input-label">Password</label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button className="input-button pokeball-button" type="submit" disabled={loading}>
+                {loading ? 'Logging in...' : 'Log In'}
+              </button>
+              {error && <p style={{ color: 'red' }}>{error}</p>}
+            </form>
+            <p className="sign-up">
+              Don't have an account? <a href="#">Sign Up</a>
+            </p>
+          </div>
+          <div className="modal-right">
+            <img
+              src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png"
+              alt="Pikachu"
+              className="pikachu-image"
+            />
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 };
 
 
