@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const generateToken = require('../utils/generateToken');
 
 const registerUser = async (req, res) => {
+    console.log("registerUser called with body:", req.body);
     try {
         const {username,email,password} = req.body;
 

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../api/user';
+import { registerUser } from '../api/user';
 import '../css/Login.css';
 
-const LoginPage = () => {
+const SignUp = () => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -11,25 +12,25 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
+    console.log('📤 front SignUp request:', { username, email, password });
 
     try {
-      const userData = await loginUser({email, password});
-      console.log('User logged in:', userData);
+      const userData = await registerUser({ username, email, password });
+      console.log('✅ User registered:', userData);
 
       if (userData?.token) {
-        // שמירת מידע המשתמש
-      localStorage.setItem('userInfo', JSON.stringify(userData));
-        navigate('/home'); 
-
+        localStorage.setItem('userInfo', JSON.stringify(userData));
+        navigate('/login'); // ניתוב לדף הבית
       } else {
-        setError('Login succeeded but no token was returned');
+        setError('Registration succeeded but no token was returned');
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      console.error('❌ Registration error:', err);
+      setError(err.response?.data?.message || 'Registration failed');
     } finally {
       setLoading(false);
     }
@@ -40,9 +41,19 @@ const LoginPage = () => {
       <div className="modal is-open">
         <div className="modal-container">
           <div className="modal-left">
-            <h2 className="modal-title">LogIn</h2>
-            <p className="modal-desc">Welcome back! Please enter your details.</p>
-            <form onSubmit={handleLogin}>
+            <h2 className="modal-title">Sign Up</h2>
+            <p className="modal-desc">Create a new account.</p>
+            <form onSubmit={handleSignUp}>
+              <div className="input-block">
+                <label className="input-label">Username</label>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
               <div className="input-block">
                 <label className="input-label">Email</label>
                 <input
@@ -63,16 +74,24 @@ const LoginPage = () => {
                   required
                 />
               </div>
-              <button className="input-button pokeball-button" type="submit" disabled={loading}>
-                {loading ? 'Logging in...' : 'Log In'}
+              <button
+                className="input-button pokeball-button"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? 'Signing up...' : 'Sign Up'}
               </button>
               {error && <p style={{ color: 'red' }}>{error}</p>}
             </form>
 
             <p className="sign-up">
-              Don't have an account?{" "}
-              <button type="button" className="link-button" onClick={() => navigate('/signup')}>
-                Sign Up
+              Already have an account?{' '}
+              <button
+                type="button"
+                className="link-button"
+                onClick={() => navigate('/login')}
+              >
+                Log In
               </button>
             </p>
           </div>
@@ -89,4 +108,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignUp;
