@@ -1,8 +1,14 @@
-// client/src/pages/Home.js
 import React from 'react';
+import DashboardNavBar from '../components/DashbordNavBar';
 
 const Home = () => {
-  return <h1>Welcome to Home Page</h1>;
+
+  return (
+    <div>
+      <h1>Welcome to Home Page</h1>
+      <DashboardNavBar />
+    </div>
+  );
 };
 
 export default Home;

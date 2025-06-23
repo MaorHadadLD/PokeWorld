@@ -1,0 +1,45 @@
+/* DashboardNavBar.css */
+
+.dashboard-nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: linear-gradient(to right, #ff1c1c, #fcd748, #3b4cca);
+  padding: 15px 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-bottom: 5px solid #fff;
+}
+
+.dashboard-nav button {
+  background-color: #ffffff;
+  border: 2px solid #333;
+  color: #333;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+}
+
+.dashboard-nav button:hover {
+  background-color: #50c2c9;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.dashboard-nav button:active {
+  transform: scale(0.95);
+}
+
+.dashboard-nav button.active {
+  background-color: #3b4cca;
+  color: white;
+  border-color: #fff;
+  transform: scale(1.1);
+}
