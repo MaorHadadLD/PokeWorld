@@ -21,3 +21,16 @@ export const registerUser = async ({ username, email, password }) => {
   return response.data;
 };
 
+export const getUserProfile = async () => {
+  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  const {data} = await axios.get('api/users/profile', config);
+  return data;
+};
+
