@@ -1,29 +1,52 @@
 import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../css/DashbordNavBar.css'; 
 
-const DashboardNavBar = ({onNavigate}) => {
+const DashboardNavBar = () => {
     const [activeTab, setActiveTab] = useState('home');
+    const navigate = useNavigate();
 
     const handleClick = (tab) => {
         setActiveTab(tab);
-        if (onNavigate) {
-            onNavigate(tab);
+        // if (onNavigate) {
+        //     onNavigate(tab);
+            
+        // }
+        switch (tab) {
+            case 'home':
+                navigate('/');
+                break;
+            case 'Profile':
+                navigate('/profile');
+                break;
+            case 'collection':
+                navigate('/collection');
+                break;
+            case 'trades':
+                navigate('/trades');
+                break;
+            case 'market':
+                navigate('/market');
+                break;
+            case 'logout':
+                navigate('/logout');
+                break;
         }
-    }
+    };
     return (
         <nav className="dashboard-nav">
             <button className= {activeTab === 'home' ? 'active': ''} 
-            onClick={() => onNavigate('home')}>Home</button>
-            <button className={activeTab === 'profile' ? 'active' : ''}
-             onClick={() => onNavigate('profile')}>Profile</button>
+            onClick={() => handleClick('home')}>Home</button>
+            <button className={activeTab === 'Profile' ? 'active' : ''}
+             onClick={() => handleClick('Profile')}>Profile</button>
             <button className={activeTab === 'collection' ? 'active' : ''}
-             onClick={() => onNavigate('collection')}>Collection</button>
+             onClick={() => handleClick('collection')}>Collection</button>
             <button className={activeTab === 'trades' ? 'active' : ''}
-             onClick={() => onNavigate('trades')}>Trades</button>
+             onClick={() => handleClick('trades')}>Trades</button>
             <button className={activeTab === 'market' ? 'active' : ''}
-             onClick={() => onNavigate('market')}>Market</button>
+             onClick={() => handleClick('market')}>Market</button>
             <button className={activeTab === 'logout' ? 'active' : ''}
-             onClick={() => onNavigate('logout')}>Logout</button>
+             onClick={() => handleClick('logout')}>Logout</button>
         </nav>
     )
 }
