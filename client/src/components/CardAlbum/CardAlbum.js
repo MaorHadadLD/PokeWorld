@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import CardUpload from './CardUpload';
+// import '../../css/CardAlbum.css';
 
 const CardAlbum = ({ cards }) => {
     const [showUpload, setShowUpload] = useState(false);

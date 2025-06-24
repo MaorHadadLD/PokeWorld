@@ -28,13 +28,14 @@ const cardSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        required: true
     },
     tags: [{
         type: String
     }],
     cratedAt: {
-        type: Data,
-        default: Data.now
+        type: Date,
+        default: Date.now
     }
 });
 

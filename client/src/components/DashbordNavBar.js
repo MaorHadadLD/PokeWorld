@@ -13,8 +13,11 @@ const DashboardNavBar = () => {
             
         // }
         switch (tab) {
-            case 'home':
+            case 'login':
                 navigate('/');
+                break;
+            case 'home':
+                navigate('/home');
                 break;
             case 'Profile':
                 navigate('/profile');

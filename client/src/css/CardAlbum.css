@@ -1,0 +1,24 @@
+.collection-placeholder {
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.collection-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.add-card-btn {
+  background: #50c2c9;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
