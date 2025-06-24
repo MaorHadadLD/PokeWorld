@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUserProfile } from '../api/user';
 import '../css/ProfilePage.css';
+import CardAlbum from '../components/CardAlbum/CardAlbum';
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -42,6 +43,7 @@ const ProfilePage = () => {
 
         <button className="edit-profile-btn">Edit Profile ✏️</button>
       </div>
+      <CardAlbum cards={user.cards} />
     </div>
   )
 

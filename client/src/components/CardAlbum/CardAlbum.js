@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
+import CardUpload from './CardUpload';
 
-const CardAlbum = ({cards}) => {
+const CardAlbum = ({ cards }) => {
+    const [showUpload, setShowUpload] = useState(false);
     return (
         <div className="collection-placeholder">
             <div className="collection-icon">📖</div>
@@ -11,8 +13,10 @@ const CardAlbum = ({cards}) => {
                 ) : (
                     <ul>{cards.map(card => <li key ={card._id}>{card.name}</li>)}</ul>
                 )}
-                <button className="add-card-btn">Add Card</button>
-
+                <button className="add-card-btn" onClick={() => setShowUpload(prev => !prev)}>
+                    {showUpload ? 'Cancel' : 'Add Card'}
+                </button>
+                {showUpload && <CardUpload />}
         </div>
     );
 };
