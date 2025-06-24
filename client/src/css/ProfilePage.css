@@ -1,0 +1,133 @@
+.profile-container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  font-family: 'Heebo', sans-serif;
+  direction: rtl;
+}
+
+.profile-card {
+  background: #f9fbff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(to right, #4a68d1, #dc7633);
+  color: white;
+  font-size: 36px;
+  line-height: 90px;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+}
+
+.profile-name {
+  font-size: 24px;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.profile-joined {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.stat {
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: white;
+  min-width: 70px;
+}
+
+.stat b {
+  display: block;
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.stat.purple {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.stat.orange {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.stat.blue {
+  background: #e3f2fd;
+  color: #1e88e5;
+}
+
+.edit-profile-btn {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.profile-tabs {
+  display: flex;
+  justify-content: center;
+  background: #f1f5fb;
+  margin-top: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tab {
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #444;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: #2196f3;
+  color: white;
+}
+
+.collection-placeholder {
+  background: #1e1e2f;
+  color: white;
+  padding: 40px;
+  border-radius: 16px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.collection-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+  background: linear-gradient(to right, #4a68d1, #dc7633);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.add-card-btn {
+  background: linear-gradient(to right, #dc7633, #4a68d1);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}

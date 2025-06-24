@@ -36,8 +36,10 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
     try {
         const {email, password} = req.body;
+        console.log("loginUser called with body:", req.body);
 
         const user = await User.findOne({email});
+        console.log('loginUser found user:', user ? user._id : 'No user found');
         if (!user) {
             return res.status(400).json({message: 'Invalid email or password'});
         }
@@ -62,6 +64,7 @@ const loginUser = async (req, res) => {
 const getUserProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user._id).select('-password');
+        console.log('getUserProfile called for user:', user._id);
 
         if (!user) {
             return res.status(404).json({message: 'User not found'});

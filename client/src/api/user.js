@@ -22,15 +22,21 @@ export const registerUser = async ({ username, email, password }) => {
 };
 
 export const getUserProfile = async () => {
-  const token = JSON.parse(localStorage.getItem('userInfo'))?.token;
-
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const token = userInfo?.token;
+  console.log('📤 front getUserProfile userInfo:', userInfo);
+  console.log('📤 front getUserProfile request:', { token });
+  if (!token) {
+    throw new Error('No token found, user is not authenticated');
+  }
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     }
   };
 
-  const {data} = await axios.get('api/users/profile', config);
-  return data;
+  const response = await axios.get(`${API_URL}/profile`, config);
+  console.log('📤 front getUserProfile response:', response.data);
+  return response.data;
 };
 
